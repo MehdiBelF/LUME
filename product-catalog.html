@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo i { font-size: 1.75rem; }
+
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 1.25rem; font-weight: 700; }
+        .stat-label {
+            opacity: 0.9;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .toolbar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 80px;
+            z-index: 90;
+        }
+
+        .toolbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.25rem;
+            background: var(--bg);
+            padding: 0.25rem;
+            border-radius: 0.5rem;
+        }
+
+        .view-btn {
+            padding: 0.5rem 0.75rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 0.375rem;
+            color: var(--text-light);
+            transition: all 0.2s;
+        }
+
+        .view-btn.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-bottom: 6rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .product-grid.list-view .product-card {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            align-items: center;
+        }
+
+        .product-grid.list-view .product-image {
+            height: 120px;
+            border-radius: 0.75rem 0 0 0.75rem;
+        }
+
+        .product-grid.list-view .product-info {
+            padding: 1rem 1.5rem;
+        }
+
+        .product-card {
+            background: var(--card);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-image-placeholder {
+            font-size: 3rem;
+            color: var(--text-light);
+            opacity: 0.3;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .product-info { padding: 1.25rem; }
+
+        .product-sku {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .product-category {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .product-prices {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .price-box {
+            background: var(--bg);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .price-label {
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            color: var(--text-light);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .price-value {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: white;
+            border-radius: 1rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title { font-size: 1.25rem; font-weight: 700; }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--bg);
+            color: var(--danger);
+        }
+
+        .modal-body { padding: 1.5rem; }
+
+        .modal-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-image-placeholder {
+            font-size: 4rem;
+            color: var(--text-light);
+            opacity: 0.3;
+        }
+
+        .form-group { margin-bottom: 1rem; }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover { background: var(--primary-dark); }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover { background: var(--border); }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 5rem;
+            right: 2rem;
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .toast {
+            background: var(--text);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-lg);
+            animation: toastSlide 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        @keyframes toastSlide {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--danger); }
+
+        .export-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            z-index: 80;
+            box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1);
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .export-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; text-align: center; }
+            .header-stats { gap: 1rem; }
+            .toolbar-content { flex-direction: column; align-items: stretch; }
+            .search-box { min-width: 100%; }
+            .main { padding: 1rem; padding-bottom: 8rem; }
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+            .modal { margin: 1rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .export-bar { padding: 0.75rem; gap: 0.5rem; }
+            .export-btn { padding: 0.5rem 1rem; font-size: 0.875rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-boxes-stacked"></i>
+                <span>Product Catalog</span>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalProducts">0</div>
+                    <div class="stat-label">Products</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalCategories">0</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="filteredCount">0</div>
+                    <div class="stat-label">Showing</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="toolbar">
+        <div class="toolbar-content">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by SKU, name, or category...">
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="K">K-Series</button>
+                <button class="filter-btn" data-filter="DL">DL-Series</button>
+                <button class="filter-btn" data-filter="numeric">Numeric</button>
+                <button class="filter-btn" data-filter="X">X-Series</button>
+            </div>
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="grid"><i class="fas fa-th"></i></button>
+                <button class="view-btn" data-view="list"><i class="fas fa-list"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="product-grid" id="productGrid"></div>
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <i class="fas fa-search"></i>
+            <h3>No products found</h3>
+            <p>Try adjusting your search or filter criteria</p>
+        </div>
+    </main>
+
+    <div class="export-bar">
+        <button class="export-btn" onclick="exportToCSV()">
+            <i class="fas fa-file-csv"></i> Export CSV
+        </button>
+        <button class="export-btn" onclick="exportToJSON()">
+            <i class="fas fa-file-code"></i> Export JSON
+        </button>
+        <button class="export-btn" onclick="saveToLocalStorage()">
+            <i class="fas fa-save"></i> Save Data
+        </button>
+        <button class="export-btn" onclick="loadFromLocalStorage()">
+            <i class="fas fa-upload"></i> Load Data
+        </button>
+    </div>
+
+    <div class="modal-overlay" id="productModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Product</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image" id="modalImage">
+                    <div class="modal-image-placeholder"><i class="fas fa-image"></i></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Product Image URL</label>
+                    <input type="text" class="form-input" id="modalImageUrl" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">SKU</label>
+                    <input type="text" class="form-input" id="modalSku" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" class="form-input" id="modalName" placeholder="Enter product name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <input type="text" class="form-input" id="modalCategory" placeholder="Enter category">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Price Tier 1</label>
+                        <input type="number" class="form-input" id="modalPrice1" placeholder="0.00" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Price Tier 2</label>
+                        <input type="number" class="form-input" id="modalPrice2" placeholder="0.00" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Price Tier 3</label>
+                        <input type="number" class="form-input" id="modalPrice3" placeholder="0.00" step="0.01">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveProduct()">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        const initialProducts = [
+            { sku: "10001P/AL", name: "10001P AL", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "10001P/AS", name: "10001P AS", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "10007/A1", name: "10007 A1", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "10007/A2", name: "10007 A2", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "10007/B1", name: "10007 B1", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "10007P/B2", name: "10007P B2", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "10200P/AS RD", name: "10200P AS RD", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "10200P/BL BK", name: "10200P BL BK", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "10200P/BS BK", name: "10200P BS BK", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "10245P/AS", name: "10245P AS", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "10245P/B S", name: "10245P B S", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "10245P/C S", name: "10245P C S", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "1035P", name: "1035P", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "50001P/1", name: "50001P 1", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5050W3", name: "5050W3", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5055W/3", name: "5055W 3", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5055W/3A", name: "5055W 3A", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5062P/1SV", name: "5062P 1SV", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5067P/1", name: "5067P 1", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5071P", name: "5071P", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5072W", name: "5072W", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5075P/B", name: "5075P B", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5075P/D", name: "5075P D", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5081P/1", name: "5081P 1", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5085P/3A", name: "5085P 3A", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5088P/A1SU", name: "5088P A1SU", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5088P/B", name: "5088P B", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5088P/C", name: "5088P C", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5088P/D", name: "5088P D", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "7269P", name: "7269P", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "7296P/A", name: "7296P A", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "7296P/B", name: "7296P B", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "7296P/C", name: "7296P C", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "7309P", name: "7309P", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "7329p", name: "7329p", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "7379P/1", name: "7379P 1", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8156P/1A", name: "8156P 1A", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8156P/1B", name: "8156P 1B", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8300P/SMOKEY", name: "8300P SMOKEY", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8615P/1M", name: "8615P 1M", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8615P/1S", name: "8615P 1S", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8615P/34", name: "8615P 34", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8631P/A", name: "8631P A", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8631P/B", name: "8631P B", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8631P/C", name: "8631P C", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8645P/A+2B+D", name: "8645P A & 2B & D", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8645P/A+B+D", name: "8645P A & B & D", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8645P/A+C+D", name: "8645P A & C & D", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8645P/A+D", name: "8645P A & D", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8667P/L", name: "8667P L", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8667P/S", name: "8667P S", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8871P/AS", name: "8871P AS", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8871P/BS", name: "8871P BS", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8871P/CS", name: "8871P CS", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8875P/D300", name: "8875P D300", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8875P/D400", name: "8875P D400", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8875P/D600", name: "8875P D600", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "8897F", name: "8897F", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "9016C/S", name: "9016C S", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "9080T/S", name: "9080T S", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "9221P/4", name: "9221P 4", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "9966P/A", name: "9966P A", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "9966P/B", name: "9966P B", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "9966P/C", name: "9966P C", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "9966P/D", name: "9966P D", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-0191/L", name: "DL 0191 L", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1005", name: "DL 1005", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1006", name: "DL 1006", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1011", name: "DL 1011", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1024", name: "DL 1024", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1026", name: "DL 1026", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1041/L", name: "DL 1041 L", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1068", name: "DL 1068", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1120", name: "DL 1120", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1126", name: "DL 1126", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1133", name: "DL 1133", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1134", name: "DL 1134", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1135", name: "DL 1135", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "DL-1153", name: "DL 1153", category: "DL-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KBT3504", name: "KBT3504", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KDW1007-SM", name: "KDW1007 SM", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KDY3288-30", name: "KDY3288 30", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KDY3442-AS-BK", name: "KDY3442 AS BK", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KDY3442-AS-WG", name: "KDY3442 AS WG", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KFR1019-A-RG", name: "KFR1019 A RG", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KFU8127", name: "KFU8127", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KFY8081-BW", name: "KFY8081 BW", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD7028-A-CF", name: "KPD7028 A CF", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD7028-A-SG", name: "KPD7028 A SG", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD7028-B-CF", name: "KPD7028 B CF", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD7028-B-SG", name: "KPD7028 B SG", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD7373-A-BD", name: "KPD7373 A BD", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD7373-A-CC", name: "KPD7373 A CC", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD7373-A-SY", name: "KPD7373 A SY", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD7945-A-SM", name: "KPD7945 A SM", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD7945-B-SM", name: "KPD7945 B SM", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD7945-C-S-SM", name: "KPD7945 C S SM", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD7945-D-M-SM", name: "KPD7945 D M SM", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD9107-AS-WI", name: "KPD9107 AS WI", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD9284-WI", name: "KPD9284 WI", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPD9285-S", name: "KPD9285 S", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPE7153-B", name: "KPE7153 B", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPE7153-C", name: "KPE7153 C", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPE7153-E", name: "KPE7153 E", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPR1019-M-BK", name: "KPR1019 M BK", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPR1019-M-RG", name: "KPR1019 M RG", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPR1019-S-BK", name: "KPR1019 S BK", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPR1019-S-RG", name: "KPR1019 S RG", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPR1172-60-GN", name: "KPR1172 60 GN", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPR1172-60-GY", name: "KPR1172 60 GY", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPR1172-60-YE", name: "KPR1172 60 YE", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPR1172-80-GN", name: "KPR1172 80 GN", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPR1172-80-YE", name: "KPR1172 80 YE", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU3058-AL-GD", name: "KPU3058 AL GD", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU3058-AL-PB", name: "KPU3058 AL PB", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU3058-AS-GD", name: "KPU3058 AS GD", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU3058-AS-PB", name: "KPU3058 AS PB", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU7289-A1-SM", name: "KPU7289 A1 SM", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU7289-B3-SM", name: "KPU7289 B3 SM", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU7289-C3-SM", name: "KPU7289 C3 SM", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU7289-D3-CS", name: "KPU7289 D3 CS", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU7303-B-GN", name: "KPU7303 B GN", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU7303-C-BL", name: "KPU7303 C BL", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU9061-S-TBB", name: "KPU9061 S TBB", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU9061-S-TBG", name: "KPU9061 S TBG", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU9283-WI", name: "KPU9283 WI", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KPU9321", name: "KPU9321", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTD3502-A-OR", name: "KTD3502 A OR", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTD3502-B-CH", name: "KTD3502 B CH", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTD3502-B-OR", name: "KTD3502 B OR", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTD3502-B-PB", name: "KTD3502 B PB", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTD3502-B-WH", name: "KTD3502 B WH", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTD3517-GB", name: "KTD3517 GB", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTD3517-RB", name: "KTD3517 RB", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTD3517-WB", name: "KTD3517 WB", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTU1063", name: "KTU1063", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTU7303-A-RD", name: "KTU7303 A RD", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTU7303-B-GN", name: "KTU7303 B GN", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTU8127", name: "KTU8127", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTY8081-L-BW", name: "KTY8081 L BW", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KTY8081-S-BW", name: "KTY8081 S BW", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KWD1007-SM", name: "KWD1007 SM", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KWU3516-S-PB", name: "KWU3516 S PB", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KWY1124-BK", name: "KWY1124 BK", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KWY4017-BK", name: "KWY4017 BK", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KWY4017-GD", name: "KWY4017 GD", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KWY9265-A-IB", name: "KWY9265 A IB", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KXT2032-24-BK (ZENITH)", name: "KXT2032 24 BK (ZENITH)", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KXT2032-24-WH (ZENITH)", name: "KXT2032 24 WH (ZENITH)", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KXT3505", name: "KXT3505", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KXT7960-M", name: "KXT7960 M", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KXT7960-S", name: "KXT7960 S", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KXY3228-45-BK", name: "KXY3228 45 BK", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "X10412/A1", name: "X10412 A1", category: "X-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "X10412/A2", name: "X10412 A2", category: "X-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "X-5086", name: "X 5086", category: "X-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "5088P/A", name: "5088P A", category: "Numeric Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KWD7005-SM", name: "KWD7005 SM", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 },
+            { sku: "KXT3503", name: "KXT3503", category: "K-Series", image: "", price1: 0, price2: 0, price3: 0 }
+        ];
+
+        let products = [...initialProducts];
+        let currentFilter = 'all';
+        let currentView = 'grid';
+        let editingSku = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFromLocalStorage();
+            renderProducts();
+            updateStats();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                renderProducts(e.target.value);
+            });
+
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    renderProducts(document.getElementById('searchInput').value);
+                });
+            });
+
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentView = btn.dataset.view;
+                    document.getElementById('productGrid').classList.toggle('list-view', currentView === 'list');
+                });
+            });
+
+            document.getElementById('productModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('productModal')) closeModal();
+            });
+
+            document.getElementById('modalImageUrl').addEventListener('input', (e) => {
+                const url = e.target.value;
+                const modalImage = document.getElementById('modalImage');
+                if (url) {
+                    modalImage.innerHTML = `<img src="${url}" alt="Preview" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'modal-image-placeholder\'><i class=\'fas fa-image\'></i></div>'">`;
+                } else {
+                    modalImage.innerHTML = `<div class="modal-image-placeholder"><i class="fas fa-image"></i></div>`;
+                }
+            });
+        }
+
+        function renderProducts(searchTerm = '') {
+            const grid = document.getElementById('productGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            let filtered = products.filter(p => {
+                if (currentFilter !== 'all') {
+                    if (currentFilter === 'K' && !p.sku.startsWith('K')) return false;
+                    if (currentFilter === 'DL' && !p.sku.startsWith('DL')) return false;
+                    if (currentFilter === 'X' && !p.sku.startsWith('X')) return false;
+                    if (currentFilter === 'numeric' && !p.sku[0].match(/\d/)) return false;
+                }
+
+                if (searchTerm) {
+                    const term = searchTerm.toLowerCase();
+                    return p.sku.toLowerCase().includes(term) || 
+                           p.name.toLowerCase().includes(term) ||
+                           p.category.toLowerCase().includes(term);
+                }
+                return true;
+            });
+
+            document.getElementById('filteredCount').textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            grid.innerHTML = filtered.map(product => `
+                <div class="product-card" onclick="openModal('${product.sku}')">
+                    <div class="product-image">
+                        ${product.image ? 
+                            `<img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'product-image-placeholder\'><i class=\'fas fa-box\'></i></div>'">` :
+                            `<div class="product-image-placeholder"><i class="fas fa-box"></i></div>`
+                        }
+                        <span class="product-badge">${product.category}</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-sku">${product.sku}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-category"><i class="fas fa-tag"></i> ${product.category}</div>
+                        <div class="product-prices">
+                            <div class="price-box">
+                                <div class="price-label">Tier 1</div>
+                                <div class="price-value">${product.price1 ? '$' + parseFloat(product.price1).toFixed(2) : '-'}</div>
+                            </div>
+                            <div class="price-box">
+                                <div class="price-label">Tier 2</div>
+                                <div class="price-value">${product.price2 ? '$' + parseFloat(product.price2).toFixed(2) : '-'}</div>
+                            </div>
+                            <div class="price-box">
+                                <div class="price-label">Tier 3</div>
+                                <div class="price-value">${product.price3 ? '$' + parseFloat(product.price3).toFixed(2) : '-'}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            document.getElementById('totalProducts').textContent = products.length;
+            const categories = new Set(products.map(p => p.category));
+            document.getElementById('totalCategories').textContent = categories.size;
+            document.getElementById('filteredCount').textContent = products.length;
+        }
+
+        function openModal(sku) {
+            const product = products.find(p => p.sku === sku);
+            if (!product) return;
+
+            editingSku = sku;
+            document.getElementById('modalSku').value = product.sku;
+            document.getElementById('modalName').value = product.name;
+            document.getElementById('modalCategory').value = product.category;
+            document.getElementById('modalImageUrl').value = product.image || '';
+            document.getElementById('modalPrice1').value = product.price1 || '';
+            document.getElementById('modalPrice2').value = product.price2 || '';
+            document.getElementById('modalPrice3').value = product.price3 || '';
+
+            const modalImage = document.getElementById('modalImage');
+            if (product.image) {
+                modalImage.innerHTML = `<img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'modal-image-placeholder\'><i class=\'fas fa-image\'></i></div>'">`;
+            } else {
+                modalImage.innerHTML = `<div class="modal-image-placeholder"><i class="fas fa-image"></i></div>`;
+            }
+
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').classList.remove('active');
+            editingSku = null;
+        }
+
+        function saveProduct() {
+            if (!editingSku) return;
+
+            const product = products.find(p => p.sku === editingSku);
+            if (!product) return;
+
+            product.name = document.getElementById('modalName').value || product.name;
+            product.category = document.getElementById('modalCategory').value || product.category;
+            product.image = document.getElementById('modalImageUrl').value;
+            product.price1 = parseFloat(document.getElementById('modalPrice1').value) || 0;
+            product.price2 = parseFloat(document.getElementById('modalPrice2').value) || 0;
+            product.price3 = parseFloat(document.getElementById('modalPrice3').value) || 0;
+
+            renderProducts(document.getElementById('searchInput').value);
+            updateStats();
+            closeModal();
+            showToast('Product updated successfully!', 'success');
+            saveToLocalStorage();
+        }
+
+        function exportToCSV() {
+            const headers = ['SKU', 'Name', 'Category', 'Image URL', 'Price Tier 1', 'Price Tier 2', 'Price Tier 3'];
+            const rows = products.map(p => [
+                p.sku,
+                `"${p.name}"`,
+                p.category,
+                p.image || '',
+                p.price1 || 0,
+                p.price2 || 0,
+                p.price3 || 0
+            ]);
+
+            const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            downloadFile(csv, 'products.csv', 'text/csv');
+            showToast('CSV exported successfully!', 'success');
+        }
+
+        function exportToJSON() {
+            const json = JSON.stringify(products, null, 2);
+            downloadFile(json, 'products.json', 'application/json');
+            showToast('JSON exported successfully!', 'success');
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('productCatalog', JSON.stringify(products));
+                showToast('Data saved to browser storage!', 'success');
+            } catch (e) {
+                showToast('Failed to save data', 'error');
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem('productCatalog');
+                if (saved) {
+                    const savedProducts = JSON.parse(saved);
+                    const savedMap = new Map(savedProducts.map(p => [p.sku, p]));
+                    products = initialProducts.map(p => ({
+                        ...p,
+                        ...(savedMap.get(p.sku) || {})
+                    }));
+                    showToast('Data loaded from browser storage!', 'success');
+                }
+            } catch (e) {
+                console.error('Failed to load from localStorage:', e);
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveToLocalStorage();
+            }
+            if (e.ctrlKey && e.key === 'e') {
+                e.preventDefault();
+                exportToCSV();
+            }
+        });
+    </script>
+</body>
+</html>
