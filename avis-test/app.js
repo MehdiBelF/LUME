@@ -4,19 +4,22 @@ const CONFIG = {
   companyName: "LUME"
 };
 
-const progressDots = [...document.querySelectorAll(".progress-dot")];
+const questionScreen = document.querySelector('[data-screen="question"]');
+const helpScreen = document.querySelector('[data-screen="help"]');
+const helpForm = document.querySelector("#help-form");
+const helpButton = document.querySelector("#choose-help");
+const satisfiedLink = document.querySelector("#choose-satisfied");
+const backButton = document.querySelector("#back-button");
+const copyButton = document.querySelector("#copy-link");
+const stepNumber = document.querySelector("#step-number");
+const stepProgress = document.querySelector("#step-progress");
 const liveRegion = document.querySelector("#live-region");
 const toast = document.querySelector("#toast");
-const helpForm = document.querySelector("#help-form");
-const googleButton = document.querySelector("#open-google");
-const helpGoogleLink = document.querySelector("#help-google-link");
-const satisfiedButton = document.querySelector("#choose-satisfied");
-const helpButton = document.querySelector("#choose-help");
-let currentScreen = "question";
+const visualPanel = document.querySelector(".visual-panel");
+const lightSculpture = document.querySelector(".light-sculpture");
 let toastTimer;
 
 function announce(message) {
-  if (!liveRegion) return;
   liveRegion.textContent = "";
   window.setTimeout(() => {
     liveRegion.textContent = message;
@@ -24,98 +27,61 @@ function announce(message) {
 }
 
 function showToast(message) {
-  if (!toast) return;
   window.clearTimeout(toastTimer);
   toast.textContent = message;
   toast.hidden = false;
+
   toastTimer = window.setTimeout(() => {
     toast.hidden = true;
   }, 2200);
 }
 
-function updateProgress(screenName) {
-  const isResult = screenName !== "question";
-  progressDots[0]?.classList.add("active");
-  progressDots[1]?.classList.toggle("active", isResult);
+function saveResponse(response) {
+  try {
+    localStorage.setItem("lume_experience_response", response);
+  } catch {
+    // The experience remains usable when local storage is unavailable.
+  }
 }
 
-async function showScreen(screenName) {
-  if (screenName === currentScreen) return;
+async function switchScreen(target) {
+  const outgoing = target === "help" ? questionScreen : helpScreen;
+  const incoming = target === "help" ? helpScreen : questionScreen;
 
-  const oldScreen = document.querySelector(`[data-screen="${currentScreen}"]`);
-  const nextScreen = document.querySelector(`[data-screen="${screenName}"]`);
-  if (!nextScreen) return;
+  outgoing.classList.add("leaving");
+  await new Promise(resolve => window.setTimeout(resolve, 230));
 
-  if (oldScreen) {
-    oldScreen.classList.add("leaving");
-    await new Promise(resolve => window.setTimeout(resolve, 260));
-    oldScreen.hidden = true;
-    oldScreen.classList.remove("active", "leaving");
-  }
+  outgoing.hidden = true;
+  outgoing.classList.remove("active", "leaving");
+  incoming.hidden = false;
+  incoming.classList.add("active");
 
-  nextScreen.hidden = false;
-  nextScreen.classList.add("active");
-  currentScreen = screenName;
-  updateProgress(screenName);
+  const isHelp = target === "help";
+  stepNumber.textContent = isHelp ? "02" : "01";
+  stepProgress.style.width = isHelp ? "100%" : "50%";
+
   window.scrollTo({ top: 0, behavior: "smooth" });
 
-  const heading = nextScreen.querySelector("h1");
-  heading?.setAttribute("tabindex", "-1");
-  heading?.focus({ preventScroll: true });
+  const focusTarget = isHelp ? helpScreen.querySelector("h1") : questionScreen.querySelector("h1");
+  focusTarget.setAttribute("tabindex", "-1");
+  focusTarget.focus({ preventScroll: true });
 
-  announce(
-    screenName === "help"
-      ? "Formulaire de contact LUME affiché."
-      : "Question de satisfaction affichée."
-  );
+  announce(isHelp ? "Formulaire de contact LUME affiché." : "Question de satisfaction affichée.");
 }
 
-function saveResponse(response) {
-  localStorage.setItem("lume_experience_response", response);
+function normalizePhone(phone) {
+  return phone.replace(/[^\d+]/g, "");
 }
 
-function launchConfetti() {
-  const container = document.querySelector("#confetti");
-  if (!container) return;
-
-  container.innerHTML = "";
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  const shades = ["#050505", "#555550", "#a4a49c", "#d7d7d0", "#ffffff"];
-
-  for (let index = 0; index < 36; index += 1) {
-    const piece = document.createElement("span");
-    piece.className = "confetti-piece";
-    piece.style.left = `${Math.random() * 100}%`;
-    piece.style.background = shades[index % shades.length];
-    piece.style.setProperty("--duration", `${2.4 + Math.random() * 1.8}s`);
-    piece.style.setProperty("--rotation", `${Math.random() * 360}deg`);
-    piece.style.setProperty("--drift", `${-90 + Math.random() * 180}px`);
-    piece.style.animationDelay = `${Math.random() * 0.25}s`;
-    container.appendChild(piece);
-  }
+function isMoroccanPhone(phone) {
+  const normalized = normalizePhone(phone);
+  return /^(?:0[67]\d{8}|\+?212[67]\d{8})$/.test(normalized);
 }
 
-function chooseSatisfied() {
-  saveResponse("satisfied");
-  launchConfetti();
-
-  if (!CONFIG.googleReviewUrl) {
-    showToast("Le lien Google doit être configuré");
-    return;
-  }
-
-  // Direct navigation from the click: no intermediate screen, delay or popup.
-  window.location.href = CONFIG.googleReviewUrl;
-}
-
-function chooseHelp() {
-  saveResponse("not_satisfied");
-  showScreen("help");
-}
-
-function restoreQuestion() {
-  showScreen("question");
+function setFieldError(field, message) {
+  const error = document.querySelector(`[data-error-for="${field.id}"]`);
+  field.setAttribute("aria-invalid", "true");
+  if (error) error.textContent = message;
 }
 
 function clearFieldError(field) {
@@ -125,40 +91,13 @@ function clearFieldError(field) {
 }
 
 function clearErrors() {
-  if (!helpForm) return;
   helpForm.querySelectorAll("[aria-invalid=true]").forEach(clearFieldError);
   helpForm.querySelectorAll(".field-error").forEach(error => {
     error.textContent = "";
   });
 }
 
-function resetExperience() {
-  helpForm?.reset();
-  clearErrors();
-  showScreen("question");
-  showToast("Expérience réinitialisée");
-}
-
-function openGoogleReview() {
-  window.location.href = CONFIG.googleReviewUrl;
-}
-
-function normalizePhone(phone) {
-  return phone.replace(/[^\d+]/g, "");
-}
-
-function isMoroccanPhone(phone) {
-  return /^(?:0[67]\d{8}|\+?212[67]\d{8})$/.test(normalizePhone(phone));
-}
-
-function setFieldError(field, message) {
-  const error = document.querySelector(`[data-error-for="${field.id}"]`);
-  field.setAttribute("aria-invalid", "true");
-  if (error) error.textContent = message;
-}
-
 function validateForm() {
-  if (!helpForm) return false;
   clearErrors();
 
   const name = helpForm.elements.name;
@@ -219,10 +158,20 @@ function openWhatsApp(event) {
     preferredTime: String(formData.get("preferredTime") || "Non précisé")
   };
 
-  const whatsappMessage = buildWhatsAppMessage(data);
-  const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-  const newWindow = window.open(url, "_blank", "noopener,noreferrer");
-  if (!newWindow) window.location.href = url;
+  const message = buildWhatsAppMessage(data);
+  const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+  const button = document.querySelector("#open-whatsapp");
+  const original = button.innerHTML;
+
+  button.disabled = true;
+  button.querySelector(".button-copy strong").textContent = "Ouverture de WhatsApp…";
+  button.querySelector(".button-copy small").textContent = "Un instant";
+
+  window.setTimeout(() => {
+    window.location.href = url;
+    button.disabled = false;
+    button.innerHTML = original;
+  }, 320);
 }
 
 async function copyCurrentLink() {
@@ -245,31 +194,47 @@ async function copyCurrentLink() {
   showToast("Lien copié");
 }
 
-function bindEvents() {
-  satisfiedButton?.addEventListener("click", chooseSatisfied);
-  helpButton?.addEventListener("click", chooseHelp);
-  document.querySelector("#copy-link")?.addEventListener("click", copyCurrentLink);
-  googleButton?.addEventListener("click", openGoogleReview);
-  helpForm?.addEventListener("submit", openWhatsApp);
+function bindParallax() {
+  if (!visualPanel || !lightSculpture || window.matchMedia("(pointer: coarse)").matches) return;
 
-  if (helpGoogleLink) {
-    helpGoogleLink.href = CONFIG.googleReviewUrl;
-    helpGoogleLink.target = "_blank";
-    helpGoogleLink.rel = "noopener noreferrer";
-  }
+  visualPanel.addEventListener("pointermove", event => {
+    const rect = visualPanel.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - .5;
+    const y = (event.clientY - rect.top) / rect.height - .5;
 
-  document.querySelectorAll('[data-action="back"]').forEach(button => {
-    button.addEventListener("click", restoreQuestion);
+    lightSculpture.style.transform = `translate(${x * 14}px, ${y * 14}px)`;
   });
 
-  document.querySelectorAll('[data-action="restart"]').forEach(button => {
-    button.addEventListener("click", resetExperience);
-  });
-
-  helpForm?.querySelectorAll("input, textarea").forEach(field => {
-    field.addEventListener("input", () => clearFieldError(field));
+  visualPanel.addEventListener("pointerleave", () => {
+    lightSculpture.style.transform = "";
   });
 }
 
-bindEvents();
-updateProgress("question");
+function init() {
+  satisfiedLink.href = CONFIG.googleReviewUrl;
+
+  satisfiedLink.addEventListener("click", () => {
+    saveResponse("satisfied");
+  });
+
+  helpButton.addEventListener("click", () => {
+    saveResponse("not_satisfied");
+    switchScreen("help");
+  });
+
+  backButton.addEventListener("click", () => {
+    clearErrors();
+    switchScreen("question");
+  });
+
+  copyButton.addEventListener("click", copyCurrentLink);
+  helpForm.addEventListener("submit", openWhatsApp);
+
+  helpForm.querySelectorAll("input, textarea").forEach(field => {
+    field.addEventListener("input", () => clearFieldError(field));
+  });
+
+  bindParallax();
+}
+
+init();
