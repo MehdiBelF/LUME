@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Partagez votre expérience avec LUME et aidez-nous à améliorer notre accueil, nos conseils et notre service." />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#050505" />
+  <meta property="og:title" content="LUME | Votre expérience" />
+  <meta property="og:description" content="Votre retour nous aide à améliorer l’expérience LUME." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mehdibelf.github.io/LUME/avis/" />
+  <title>LUME | Votre expérience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <div class="experience-card" aria-labelledby="main-title">
+      <header class="brand-header">
+        <div class="brand-logo" aria-label="LUME">LUME</div>
+        <p class="brand-subtitle">EXPÉRIENCE CLIENT</p>
+      </header>
+
+      <section class="screen is-active" id="screen-question" data-screen="question" aria-labelledby="main-title">
+        <div class="screen-copy">
+          <h1 id="main-title">Comment s’est passée votre expérience avec LUME&nbsp;?</h1>
+          <p>Votre retour nous aide à améliorer notre accueil, nos conseils et la qualité de notre service.</p>
+        </div>
+
+        <div class="question-block" aria-labelledby="satisfaction-question">
+          <h2 id="satisfaction-question">Êtes-vous satisfait(e) de votre expérience avec LUME&nbsp;?</h2>
+          <div class="choice-grid">
+            <button class="choice-button" type="button" data-action="satisfied">Oui, satisfait(e)</button>
+            <button class="choice-button" type="button" data-action="not-satisfied">Non, pas satisfait(e)</button>
+          </div>
+        </div>
+
+        <footer class="screen-footer">
+          <p class="privacy-note">Votre retour reste confidentiel, sauf si vous choisissez de le publier sur Google.</p>
+          <div class="copy-row">
+            <button class="link-copy-button" type="button" data-action="copy-link">Copier le lien</button>
+            <span class="copy-feedback" id="copy-feedback" aria-hidden="true"></span>
+          </div>
+        </footer>
+      </section>
+
+      <section class="screen" id="screen-satisfied" data-screen="satisfied" aria-labelledby="satisfied-title" hidden>
+        <div class="screen-copy">
+          <h2 id="satisfied-title">Merci pour votre confiance.</h2>
+          <p>Votre avis sincère aide LUME à améliorer son expérience et permet à d’autres personnes de mieux découvrir notre showroom et notre travail.</p>
+          <p class="small-line">Cela ne prend qu’une minute.</p>
+        </div>
+
+        <div class="action-stack">
+          <button class="primary-action" type="button" data-action="open-google">Laisser un avis Google</button>
+          <div class="secondary-actions" aria-label="Actions secondaires">
+            <button type="button" class="text-action" data-action="back">Retour</button>
+            <button type="button" class="text-action" data-action="reset">Recommencer</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="screen-not-satisfied" data-screen="not-satisfied" aria-labelledby="not-satisfied-title" hidden>
+        <div class="screen-copy">
+          <h2 id="not-satisfied-title">Nous souhaitons trouver une solution.</h2>
+          <p>Expliquez-nous ce qui n’a pas répondu à vos attentes. L’équipe LUME vous contactera afin de mieux comprendre votre expérience et chercher une solution.</p>
+        </div>
+
+        <form class="feedback-form" id="feedback-form" novalidate>
+          <div class="field-group">
+            <label for="full-name">Nom complet</label>
+            <input id="full-name" name="name" type="text" autocomplete="name" placeholder="Votre nom complet" required />
+            <p class="field-error" id="full-name-error"></p>
+          </div>
+
+          <div class="field-group">
+            <label for="phone">Numéro de téléphone</label>
+            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 00 00 00 00" required />
+            <p class="field-error" id="phone-error"></p>
+          </div>
+
+          <div class="field-group">
+            <label for="message">Votre message</label>
+            <textarea id="message" name="message" placeholder="Expliquez-nous ce qui s’est passé…" minlength="10" required></textarea>
+            <p class="field-error" id="message-error"></p>
+          </div>
+
+          <div class="field-group">
+            <label for="preferred-time">Moment préféré pour être contacté</label>
+            <select id="preferred-time" name="preferredTime">
+              <option value="">Non précisé</option>
+              <option value="Dès que possible">Dès que possible</option>
+              <option value="Le matin">Le matin</option>
+              <option value="L’après-midi">L’après-midi</option>
+              <option value="Le soir">Le soir</option>
+            </select>
+            <p class="field-error" id="preferred-time-error"></p>
+          </div>
+
+          <div class="action-stack form-actions">
+            <button class="primary-action" type="submit">Envoyer à LUME sur WhatsApp</button>
+            <a class="secondary-google-link" href="https://maps.app.goo.gl/Zw81ipQoqiswyTjJ6" target="_blank" rel="noopener noreferrer">Partager également mon avis sur Google</a>
+            <div class="secondary-actions" aria-label="Actions secondaires">
+              <button type="button" class="text-action" data-action="back">Retour</button>
+              <button type="button" class="text-action" data-action="reset">Recommencer</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <div class="live-region" id="live-region" aria-live="polite" aria-atomic="true"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
