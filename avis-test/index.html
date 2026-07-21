@@ -12,154 +12,219 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css?v=4">
+  <link rel="stylesheet" href="./style.css?v=6">
 </head>
 <body>
-  <div class="ambient" aria-hidden="true">
-    <span class="beam beam-a"></span>
-    <span class="beam beam-b"></span>
-    <span class="orb orb-a"></span>
-    <span class="orb orb-b"></span>
-  </div>
+  <div class="page-noise" aria-hidden="true"></div>
 
-  <div id="confetti" class="confetti" aria-hidden="true"></div>
+  <main class="experience-shell">
+    <aside class="visual-panel" aria-label="LUME">
+      <div class="visual-grid" aria-hidden="true"></div>
+      <div class="moving-beam" aria-hidden="true"></div>
 
-  <main class="app-shell">
-    <header class="brand-header">
-      <a class="brand" href="./" aria-label="LUME, revenir au début">
-        <span class="brand-name">LUME</span>
-        <span class="brand-sub">EXPÉRIENCE CLIENT</span>
-      </a>
-      <button id="copy-link" class="icon-button" type="button" aria-label="Copier le lien">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7V5a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2M5 8h8a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-8a3 3 0 0 1 3-3Z"/></svg>
-      </button>
-    </header>
+      <header class="visual-brand">
+        <img class="brand-logo brand-logo-light" src="./logo.svg?v=1" alt="Lume.">
+        <span>EXPÉRIENCE CLIENT</span>
+      </header>
 
-    <section class="experience-card" aria-live="polite">
-      <div class="progress" aria-hidden="true">
-        <span class="progress-dot active"></span>
-        <span class="progress-line"></span>
-        <span class="progress-dot"></span>
+      <div class="visual-message">
+        <p class="visual-kicker">LUMIÈRE · CONSEIL · SERVICE</p>
+        <h2>Chaque détail compte dans l’expérience LUME.</h2>
+        <p>Votre retour nous aide à rendre chaque échange plus juste, plus fluide et plus lumineux.</p>
       </div>
 
-      <section id="screen-question" class="screen active" data-screen="question">
-        <div class="intro-light" aria-hidden="true"><span></span></div>
-        <p class="eyebrow">UNE MINUTE POUR NOUS AIDER</p>
-        <h1>Comment s’est passée votre expérience avec LUME&nbsp;?</h1>
-        <p class="lead">Votre retour nous aide à améliorer notre accueil, nos conseils et la qualité de notre service.</p>
+      <div class="light-sculpture" aria-hidden="true">
+        <span class="sculpture-ring ring-one"></span>
+        <span class="sculpture-ring ring-two"></span>
+        <span class="sculpture-ring ring-three"></span>
+        <span class="light-core"></span>
+      </div>
 
-        <div class="question-block">
-          <h2>Êtes-vous satisfait(e)&nbsp;?</h2>
+      <footer class="visual-footer">
+        <span>CASABLANCA</span>
+        <span class="footer-line"></span>
+        <span>LA LUMIÈRE, AUTREMENT.</span>
+      </footer>
+    </aside>
+
+    <section class="interaction-panel">
+      <header class="mobile-header">
+        <a href="./" class="mobile-brand" aria-label="Revenir au début">
+          <img class="brand-logo brand-logo-dark" src="./logo.svg?v=1" alt="Lume.">
+          <span>EXPÉRIENCE CLIENT</span>
+        </a>
+
+        <button id="copy-link" class="copy-button" type="button" aria-label="Copier le lien">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 7V5a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2"/>
+            <rect x="2" y="8" width="14" height="14" rx="3"/>
+          </svg>
+        </button>
+      </header>
+
+      <div class="content-wrap">
+        <div class="step-indicator" aria-hidden="true">
+          <span id="step-number">01</span>
+          <span class="step-track"><span id="step-progress"></span></span>
+          <span>02</span>
+        </div>
+
+        <section id="screen-question" class="screen active" data-screen="question">
+          <div class="section-label">
+            <span class="label-dot"></span>
+            VOTRE EXPÉRIENCE
+          </div>
+
+          <h1>Comment s’est passée votre expérience avec LUME&nbsp;?</h1>
+          <p class="lead">Votre retour nous aide à améliorer notre accueil, nos conseils et la qualité de notre service.</p>
+
+          <div class="trust-row" aria-label="Informations">
+            <span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              30 secondes
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              Retour confidentiel
+            </span>
+          </div>
+
+          <div class="question-title">
+            <span>Êtes-vous satisfait(e)&nbsp;?</span>
+            <span class="question-line"></span>
+          </div>
+
           <div class="choice-grid">
-            <button id="choose-satisfied" class="choice-card choice-positive" type="button">
-              <span class="choice-icon" aria-hidden="true">
-                <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26"/><path d="M20 36c3.2 7 9 10 12 10s8.8-3 12-10M23 25h.01M41 25h.01"/></svg>
+            <a
+              id="choose-satisfied"
+              class="choice-card choice-positive"
+              href="https://maps.app.goo.gl/Zw81ipQoqiswyTjJ6"
+              aria-label="Oui, satisfait, ouvrir Google"
+            >
+              <span class="choice-top">
+                <span class="choice-index">01</span>
+                <span class="choice-arrow" aria-hidden="true">↗</span>
               </span>
-              <span class="choice-title">Oui, satisfait(e)</span>
-              <span class="choice-copy">Partager une belle expérience</span>
-              <span class="choice-arrow" aria-hidden="true">→</span>
-            </button>
+              <span class="choice-icon choice-icon-smile" aria-hidden="true">
+                <svg viewBox="0 0 64 64">
+                  <circle cx="32" cy="32" r="27"/>
+                  <path d="M20 36c3.4 7.1 9 10.4 12 10.4S40.6 43.1 44 36"/>
+                  <path d="M23 25h.01M41 25h.01"/>
+                </svg>
+              </span>
+              <span class="choice-title-text">Oui, satisfait(e)</span>
+              <span class="choice-copy">Partager mon expérience sur Google</span>
+            </a>
 
             <button id="choose-help" class="choice-card choice-help" type="button">
-              <span class="choice-icon" aria-hidden="true">
-                <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26"/><path d="M20 43c4-5 8-7 12-7s8 2 12 7M23 25h.01M41 25h.01"/></svg>
+              <span class="choice-top">
+                <span class="choice-index">02</span>
+                <span class="choice-arrow" aria-hidden="true">→</span>
               </span>
-              <span class="choice-title">Non, pas satisfait(e)</span>
-              <span class="choice-copy">Nous permettre de trouver une solution</span>
-              <span class="choice-arrow" aria-hidden="true">→</span>
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64">
+                  <circle cx="32" cy="32" r="27"/>
+                  <path d="M20 43c3.9-5 7.9-7.3 12-7.3S40.1 38 44 43"/>
+                  <path d="M23 25h.01M41 25h.01"/>
+                </svg>
+              </span>
+              <span class="choice-title-text">Non, pas satisfait(e)</span>
+              <span class="choice-copy">Permettez-nous de trouver une solution</span>
             </button>
           </div>
-        </div>
 
-        <p class="privacy-note">Votre retour reste confidentiel, sauf si vous choisissez de le publier sur Google.</p>
-      </section>
+          <p class="privacy-note">
+            Votre réponse n’est pas publiée automatiquement. Vous gardez le contrôle de votre message.
+          </p>
+        </section>
 
-      <section id="screen-satisfied" class="screen" data-screen="satisfied" hidden>
-        <div class="success-mark" aria-hidden="true">
-          <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="34"/><path d="m25 41 10 10 21-23"/></svg>
-        </div>
-        <p class="eyebrow">MERCI POUR VOTRE CONFIANCE</p>
-        <h1>Votre expérience peut inspirer d’autres personnes.</h1>
-        <p class="lead">Votre avis sincère aide LUME à améliorer son service et permet à d’autres visiteurs de mieux découvrir notre showroom et notre travail.</p>
-
-        <button id="open-google" class="primary-action shimmer" type="button">
-          <span>Laisser un avis Google</span>
-          <span aria-hidden="true">↗</span>
-        </button>
-        <p class="micro-copy">Cela ne prend qu’une minute.</p>
-
-        <div class="secondary-actions">
-          <button class="text-action" data-action="back" type="button">Retour</button>
-          <button class="text-action" data-action="restart" type="button">Recommencer</button>
-        </div>
-      </section>
-
-      <section id="screen-help" class="screen" data-screen="help" hidden>
-        <div class="support-mark" aria-hidden="true">
-          <svg viewBox="0 0 80 80"><path d="M19 25a27 27 0 0 1 42 0v28a8 8 0 0 1-8 8h-9"/><rect x="12" y="29" width="12" height="23" rx="6"/><rect x="56" y="29" width="12" height="23" rx="6"/><path d="M35 61h9"/></svg>
-        </div>
-        <p class="eyebrow">NOUS SOMMES À VOTRE ÉCOUTE</p>
-        <h1>Nous souhaitons trouver une solution.</h1>
-        <p class="lead">Expliquez-nous ce qui n’a pas répondu à vos attentes. L’équipe LUME vous répondra afin de mieux comprendre votre expérience.</p>
-
-        <form id="help-form" novalidate>
-          <div class="field-group">
-            <label for="full-name">Nom complet</label>
-            <input id="full-name" name="name" type="text" autocomplete="name" placeholder="Votre nom complet" required>
-            <small class="field-error" data-error-for="full-name"></small>
-          </div>
-
-          <div class="field-group">
-            <label for="phone">Numéro de téléphone</label>
-            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 00 00 00 00" required>
-            <small class="field-error" data-error-for="phone"></small>
-          </div>
-
-          <div class="field-group">
-            <label for="message">Votre message</label>
-            <textarea id="message" name="message" rows="4" placeholder="Expliquez-nous ce qui s’est passé…" required></textarea>
-            <small class="field-error" data-error-for="message"></small>
-          </div>
-
-          <div class="field-group">
-            <label for="preferred-time">Moment préféré pour être contacté</label>
-            <select id="preferred-time" name="preferredTime">
-              <option value="Dès que possible">Dès que possible</option>
-              <option value="Le matin">Le matin</option>
-              <option value="L’après-midi">L’après-midi</option>
-              <option value="Le soir">Le soir</option>
-            </select>
-          </div>
-
-          <button id="open-whatsapp" class="primary-action whatsapp-action" type="submit">
-            <span class="wa-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
-                <path fill="currentColor" stroke="none" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.966-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.074-.297-.148-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.669-1.612-.916-2.208-.242-.579-.487-.5-.669-.51-.173-.009-.371-.011-.57-.011-.198 0-.52.074-.792.371-.272.297-1.04 1.016-1.04 2.479s1.065 2.875 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.693.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.004 21.5h-.004a9.58 9.58 0 0 1-4.885-1.337l-.35-.208-3.631.952.969-3.54-.228-.363A9.55 9.55 0 0 1 2.5 12.066C2.502 6.79 6.793 2.5 12.004 2.5a9.44 9.44 0 0 1 6.73 2.79 9.45 9.45 0 0 1 2.77 6.737c-.003 5.277-4.294 9.473-9.5 9.473m8.085-17.594A11.32 11.32 0 0 0 12.004.55C5.715.55.598 5.666.596 11.957c0 2.011.525 3.975 1.521 5.704L.5 23.55l6.033-1.583A11.4 11.4 0 0 0 12 23.365h.005c6.288 0 11.405-5.116 11.408-11.407a11.33 11.33 0 0 0-3.324-8.052"/>
-              </svg>
-            </span>
-            <span>Envoyer à LUME sur WhatsApp</span>
+        <section id="screen-help" class="screen" data-screen="help" hidden>
+          <button id="back-button" class="back-button" type="button">
+            <span aria-hidden="true">←</span>
+            Retour
           </button>
-        </form>
 
-        <a id="help-google-link" href="#" hidden aria-hidden="true" tabindex="-1"></a>
+          <div class="section-label">
+            <span class="label-dot"></span>
+            NOUS SOMMES À VOTRE ÉCOUTE
+          </div>
 
-        <div class="secondary-actions">
-          <button class="text-action" data-action="back" type="button">Retour</button>
-          <button class="text-action" data-action="restart" type="button">Recommencer</button>
-        </div>
-      </section>
+          <h1>Parlez-nous de votre expérience.</h1>
+          <p class="lead">Expliquez-nous ce qui n’a pas répondu à vos attentes. L’équipe LUME vous contactera afin de comprendre la situation et chercher une solution.</p>
+
+          <form id="help-form" novalidate>
+            <div class="form-grid">
+              <div class="field-group">
+                <label for="full-name">Nom complet</label>
+                <div class="field-control">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c.7-5 3.4-7 8-7s7.3 2 8 7"/></svg>
+                  <input id="full-name" name="name" type="text" autocomplete="name" placeholder="Votre nom complet" required>
+                </div>
+                <small class="field-error" data-error-for="full-name"></small>
+              </div>
+
+              <div class="field-group">
+                <label for="phone">Numéro de téléphone</label>
+                <div class="field-control">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.3 3.5 10 8l-2.1 2a15 15 0 0 0 6.1 6.1l2-2.1 4.5 2.7-.7 3.2c-.2.8-.9 1.4-1.8 1.4C9.6 21.3 2.7 14.4 2.7 6c0-.9.6-1.6 1.4-1.8l3.2-.7Z"/></svg>
+                  <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 00 00 00 00" required>
+                </div>
+                <small class="field-error" data-error-for="phone"></small>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="message">Votre message</label>
+              <div class="field-control field-textarea">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v13H8l-4 4V4Z"/><path d="M8 9h8M8 13h5"/></svg>
+                <textarea id="message" name="message" rows="5" placeholder="Expliquez-nous ce qui s’est passé…" required></textarea>
+              </div>
+              <small class="field-error" data-error-for="message"></small>
+            </div>
+
+            <div class="field-group">
+              <label for="preferred-time">Moment préféré pour être contacté</label>
+              <div class="field-control">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <select id="preferred-time" name="preferredTime">
+                  <option value="Dès que possible">Dès que possible</option>
+                  <option value="Le matin">Le matin</option>
+                  <option value="L’après-midi">L’après-midi</option>
+                  <option value="Le soir">Le soir</option>
+                </select>
+              </div>
+            </div>
+
+            <button id="open-whatsapp" class="whatsapp-action" type="submit">
+              <span class="wa-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path fill="currentColor" stroke="none" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.966-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.074-.297-.148-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.669-1.612-.916-2.208-.242-.579-.487-.5-.669-.51-.173-.009-.371-.011-.57-.011-.198 0-.52.074-.792.371-.272.297-1.04 1.016-1.04 2.479s1.065 2.875 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.693.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.004 21.5h-.004a9.58 9.58 0 0 1-4.885-1.337l-.35-.208-3.631.952.969-3.54-.228-.363A9.55 9.55 0 0 1 2.5 12.066C2.502 6.79 6.793 2.5 12.004 2.5a9.44 9.44 0 0 1 6.73 2.79 9.45 9.45 0 0 1 2.77 6.737c-.003 5.277-4.294 9.473-9.5 9.473m8.085-17.594A11.32 11.32 0 0 0 12.004.55C5.715.55.598 5.666.596 11.957c0 2.011.525 3.975 1.521 5.704L.5 23.55l6.033-1.583A11.4 11.4 0 0 0 12 23.365h.005c6.288 0 11.405-5.116 11.408-11.407a11.33 11.33 0 0 0-3.324-8.052"/>
+                </svg>
+              </span>
+              <span class="button-copy">
+                <strong>Envoyer à LUME sur WhatsApp</strong>
+                <small>Votre message sera prérempli</small>
+              </span>
+              <span class="button-arrow" aria-hidden="true">→</span>
+            </button>
+
+            <p class="form-note">
+              Aucune donnée personnelle n’est enregistrée sur cette page.
+            </p>
+          </form>
+        </section>
+      </div>
+
+      <footer class="interaction-footer">
+        <span>© LUME</span>
+        <span>Expérience client</span>
+      </footer>
     </section>
-
-    <footer class="page-footer">
-      <span>LUME · Casablanca</span>
-      <span aria-hidden="true">—</span>
-      <span>La lumière, autrement.</span>
-    </footer>
   </main>
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <div id="live-region" class="sr-only" aria-live="assertive"></div>
 
-  <script src="./app.js?v=4"></script>
+  <script src="./app.js?v=6"></script>
 </body>
 </html>
