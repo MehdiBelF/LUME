@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./style.css?v=4">
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
@@ -133,13 +133,15 @@
 
           <button id="open-whatsapp" class="primary-action whatsapp-action" type="submit">
             <span class="wa-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M20.5 3.5A11.7 11.7 0 0 0 2.2 17.6L1 23l5.5-1.4A11.8 11.8 0 0 0 12 23h.1A11.8 11.8 0 0 0 20.5 3.5Z"/><path d="M8.2 6.7c-.3-.7-.6-.7-.9-.7h-.7c-.3 0-.7.1-1 .5-.3.4-1.3 1.3-1.3 3.1s1.4 3.6 1.6 3.9c.2.3 2.7 4.1 6.6 5.7.9.4 1.6.6 2.2.8.9.3 1.8.3 2.4.2.8-.1 2.4-1 2.7-1.9.3-.9.3-1.7.2-1.9-.1-.2-.4-.3-.8-.5l-2.6-1.2c-.4-.2-.7-.3-1 .3-.3.4-1 1.2-1.3 1.5-.2.3-.5.3-.9.1a10.4 10.4 0 0 1-3.1-1.9 11.4 11.4 0 0 1-2.1-2.6c-.2-.4 0-.6.2-.8l.6-.7c.2-.2.3-.4.4-.7.1-.3.1-.5 0-.7L8.2 6.7Z"/></svg>
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path fill="currentColor" stroke="none" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.966-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.074-.297-.148-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.074-.149-.669-1.612-.916-2.208-.242-.579-.487-.5-.669-.51-.173-.009-.371-.011-.57-.011-.198 0-.52.074-.792.371-.272.297-1.04 1.016-1.04 2.479s1.065 2.875 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.693.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.004 21.5h-.004a9.58 9.58 0 0 1-4.885-1.337l-.35-.208-3.631.952.969-3.54-.228-.363A9.55 9.55 0 0 1 2.5 12.066C2.502 6.79 6.793 2.5 12.004 2.5a9.44 9.44 0 0 1 6.73 2.79 9.45 9.45 0 0 1 2.77 6.737c-.003 5.277-4.294 9.473-9.5 9.473m8.085-17.594A11.32 11.32 0 0 0 12.004.55C5.715.55.598 5.666.596 11.957c0 2.011.525 3.975 1.521 5.704L.5 23.55l6.033-1.583A11.4 11.4 0 0 0 12 23.365h.005c6.288 0 11.405-5.116 11.408-11.407a11.33 11.33 0 0 0-3.324-8.052"/>
+              </svg>
             </span>
             <span>Envoyer à LUME sur WhatsApp</span>
           </button>
         </form>
 
-        <a id="help-google-link" class="secondary-link" href="#">Partager également mon avis sur Google</a>
+        <a id="help-google-link" href="#" hidden aria-hidden="true" tabindex="-1"></a>
 
         <div class="secondary-actions">
           <button class="text-action" data-action="back" type="button">Retour</button>
@@ -158,6 +160,6 @@
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <div id="live-region" class="sr-only" aria-live="assertive"></div>
 
-  <script src="./app.js"></script>
+  <script src="./app.js?v=4"></script>
 </body>
 </html>
