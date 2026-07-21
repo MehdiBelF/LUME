@@ -98,9 +98,10 @@ function launchConfetti() {
   }, 4700);
 }
 
-function chooseSatisfied() {
+function chooseSatisfied(event) {
   saveResponse("satisfied");
-  showScreen("satisfied").then(launchConfetti);
+  launchConfetti();
+  openGoogleReview(event.currentTarget);
 }
 
 function chooseHelp() {
