@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050505">
+  <meta name="description" content="Partagez votre expérience avec LUME en quelques secondes.">
+  <meta property="og:title" content="LUME | Votre expérience">
+  <meta property="og:description" content="Votre retour nous aide à améliorer l’expérience LUME.">
+  <meta property="og:type" content="website">
+  <title>LUME | Votre expérience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <span class="beam beam-a"></span>
+    <span class="beam beam-b"></span>
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+  </div>
+
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+
+  <main class="app-shell">
+    <header class="brand-header">
+      <a class="brand" href="./" aria-label="LUME, revenir au début">
+        <span class="brand-name">LUME</span>
+        <span class="brand-sub">EXPÉRIENCE CLIENT</span>
+      </a>
+      <button id="copy-link" class="icon-button" type="button" aria-label="Copier le lien">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7V5a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2M5 8h8a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-8a3 3 0 0 1 3-3Z"/></svg>
+      </button>
+    </header>
+
+    <section class="experience-card" aria-live="polite">
+      <div class="progress" aria-hidden="true">
+        <span class="progress-dot active"></span>
+        <span class="progress-line"></span>
+        <span class="progress-dot"></span>
+      </div>
+
+      <section id="screen-question" class="screen active" data-screen="question">
+        <div class="intro-light" aria-hidden="true"><span></span></div>
+        <p class="eyebrow">UNE MINUTE POUR NOUS AIDER</p>
+        <h1>Comment s’est passée votre expérience avec LUME&nbsp;?</h1>
+        <p class="lead">Votre retour nous aide à améliorer notre accueil, nos conseils et la qualité de notre service.</p>
+
+        <div class="question-block">
+          <h2>Êtes-vous satisfait(e)&nbsp;?</h2>
+          <div class="choice-grid">
+            <button id="choose-satisfied" class="choice-card choice-positive" type="button">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26"/><path d="M20 36c3.2 7 9 10 12 10s8.8-3 12-10M23 25h.01M41 25h.01"/></svg>
+              </span>
+              <span class="choice-title">Oui, satisfait(e)</span>
+              <span class="choice-copy">Partager une belle expérience</span>
+              <span class="choice-arrow" aria-hidden="true">→</span>
+            </button>
+
+            <button id="choose-help" class="choice-card choice-help" type="button">
+              <span class="choice-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26"/><path d="M20 43c4-5 8-7 12-7s8 2 12 7M23 25h.01M41 25h.01"/></svg>
+              </span>
+              <span class="choice-title">Non, pas satisfait(e)</span>
+              <span class="choice-copy">Nous permettre de trouver une solution</span>
+              <span class="choice-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+
+        <p class="privacy-note">Votre retour reste confidentiel, sauf si vous choisissez de le publier sur Google.</p>
+      </section>
+
+      <section id="screen-satisfied" class="screen" data-screen="satisfied" hidden>
+        <div class="success-mark" aria-hidden="true">
+          <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="34"/><path d="m25 41 10 10 21-23"/></svg>
+        </div>
+        <p class="eyebrow">MERCI POUR VOTRE CONFIANCE</p>
+        <h1>Votre expérience peut inspirer d’autres personnes.</h1>
+        <p class="lead">Votre avis sincère aide LUME à améliorer son service et permet à d’autres visiteurs de mieux découvrir notre showroom et notre travail.</p>
+
+        <button id="open-google" class="primary-action shimmer" type="button">
+          <span>Laisser un avis Google</span>
+          <span aria-hidden="true">↗</span>
+        </button>
+        <p class="micro-copy">Cela ne prend qu’une minute.</p>
+
+        <div class="secondary-actions">
+          <button class="text-action" data-action="back" type="button">Retour</button>
+          <button class="text-action" data-action="restart" type="button">Recommencer</button>
+        </div>
+      </section>
+
+      <section id="screen-help" class="screen" data-screen="help" hidden>
+        <div class="support-mark" aria-hidden="true">
+          <svg viewBox="0 0 80 80"><path d="M19 25a27 27 0 0 1 42 0v28a8 8 0 0 1-8 8h-9"/><rect x="12" y="29" width="12" height="23" rx="6"/><rect x="56" y="29" width="12" height="23" rx="6"/><path d="M35 61h9"/></svg>
+        </div>
+        <p class="eyebrow">NOUS SOMMES À VOTRE ÉCOUTE</p>
+        <h1>Nous souhaitons trouver une solution.</h1>
+        <p class="lead">Expliquez-nous ce qui n’a pas répondu à vos attentes. L’équipe LUME vous répondra afin de mieux comprendre votre expérience.</p>
+
+        <form id="help-form" novalidate>
+          <div class="field-group">
+            <label for="full-name">Nom complet</label>
+            <input id="full-name" name="name" type="text" autocomplete="name" placeholder="Votre nom complet" required>
+            <small class="field-error" data-error-for="full-name"></small>
+          </div>
+
+          <div class="field-group">
+            <label for="phone">Numéro de téléphone</label>
+            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 00 00 00 00" required>
+            <small class="field-error" data-error-for="phone"></small>
+          </div>
+
+          <div class="field-group">
+            <label for="message">Votre message</label>
+            <textarea id="message" name="message" rows="4" placeholder="Expliquez-nous ce qui s’est passé…" required></textarea>
+            <small class="field-error" data-error-for="message"></small>
+          </div>
+
+          <div class="field-group">
+            <label for="preferred-time">Moment préféré pour être contacté</label>
+            <select id="preferred-time" name="preferredTime">
+              <option value="Dès que possible">Dès que possible</option>
+              <option value="Le matin">Le matin</option>
+              <option value="L’après-midi">L’après-midi</option>
+              <option value="Le soir">Le soir</option>
+            </select>
+          </div>
+
+          <button id="open-whatsapp" class="primary-action whatsapp-action" type="submit">
+            <span class="wa-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20.5 3.5A11.7 11.7 0 0 0 2.2 17.6L1 23l5.5-1.4A11.8 11.8 0 0 0 12 23h.1A11.8 11.8 0 0 0 20.5 3.5Z"/><path d="M8.2 6.7c-.3-.7-.6-.7-.9-.7h-.7c-.3 0-.7.1-1 .5-.3.4-1.3 1.3-1.3 3.1s1.4 3.6 1.6 3.9c.2.3 2.7 4.1 6.6 5.7.9.4 1.6.6 2.2.8.9.3 1.8.3 2.4.2.8-.1 2.4-1 2.7-1.9.3-.9.3-1.7.2-1.9-.1-.2-.4-.3-.8-.5l-2.6-1.2c-.4-.2-.7-.3-1 .3-.3.4-1 1.2-1.3 1.5-.2.3-.5.3-.9.1a10.4 10.4 0 0 1-3.1-1.9 11.4 11.4 0 0 1-2.1-2.6c-.2-.4 0-.6.2-.8l.6-.7c.2-.2.3-.4.4-.7.1-.3.1-.5 0-.7L8.2 6.7Z"/></svg>
+            </span>
+            <span>Envoyer à LUME sur WhatsApp</span>
+          </button>
+        </form>
+
+        <a id="help-google-link" class="secondary-link" href="#">Partager également mon avis sur Google</a>
+
+        <div class="secondary-actions">
+          <button class="text-action" data-action="back" type="button">Retour</button>
+          <button class="text-action" data-action="restart" type="button">Recommencer</button>
+        </div>
+      </section>
+    </section>
+
+    <footer class="page-footer">
+      <span>LUME · Casablanca</span>
+      <span aria-hidden="true">—</span>
+      <span>La lumière, autrement.</span>
+    </footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div id="live-region" class="sr-only" aria-live="assertive"></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
