@@ -1,12 +1,14 @@
 :root {
-  --color-background: #f4f4f1;
+  --color-background: #f2f2ef;
   --color-card: #ffffff;
+  --color-surface: #f8f8f6;
   --color-text: #090909;
-  --color-muted: #6f6f6f;
-  --color-border: #deded8;
+  --color-muted: #676762;
+  --color-soft: #ecece7;
+  --color-border: #dadad3;
   --color-black: #050505;
   --color-error: #8a1c1c;
-  --color-disabled: #b8b8b2;
+  --color-disabled: #b9b9b2;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -15,11 +17,9 @@
   --space-6: 1.5rem;
   --space-8: 2rem;
   --space-10: 2.5rem;
-  --radius-small: 0.5rem;
-  --radius-medium: 0.875rem;
-  --radius-large: 1.5rem;
-  --shadow-card: 0 1.25rem 3.5rem rgba(5, 5, 5, 0.08);
-  --focus-ring: 0 0 0 0.2rem rgba(5, 5, 5, 0.18);
+  --radius: 8px;
+  --shadow-card: 0 24px 70px rgba(5, 5, 5, 0.12);
+  --focus-ring: 0 0 0 4px rgba(5, 5, 5, 0.16);
 }
 
 *,
@@ -77,43 +77,76 @@ a {
   min-height: 100dvh;
   display: grid;
   place-items: center;
-  padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+  padding: max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom));
 }
 
 .experience-card {
-  width: min(100%, 680px);
-  margin: 0 auto;
-  padding: clamp(1.25rem, 5vw, 2.75rem);
+  width: min(100%, 960px);
+  min-height: min(680px, calc(100vh - 36px));
+  display: grid;
   overflow: hidden;
   background: var(--color-card);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-large);
+  border-radius: var(--radius);
   box-shadow: var(--shadow-card);
 }
 
 .brand-header {
-  display: grid;
-  gap: var(--space-1);
-  margin-bottom: clamp(1.75rem, 6vw, 2.75rem);
+  min-height: 188px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: var(--space-6);
+  background: var(--color-black);
+  color: var(--color-card);
+}
+
+.brand-mark {
+  width: min(100%, 260px);
+  padding: 7px;
+  background: var(--color-card);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--radius);
 }
 
 .brand-logo-image {
   display: block;
-  width: min(46vw, 13rem);
+  width: 100%;
   height: auto;
   object-fit: contain;
 }
 
-.brand-subtitle {
+.brand-caption {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.brand-subtitle,
+.brand-note {
   margin: 0;
-  color: var(--color-muted);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.24em;
+}
+
+.brand-subtitle {
+  color: var(--color-card);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.brand-note {
+  color: #bdbdb7;
+  font-size: 0.9rem;
+}
+
+.content-panel {
+  display: grid;
+  align-content: center;
+  padding: var(--space-6);
 }
 
 .screen {
-  animation: screen-enter 260ms ease both;
+  animation: screen-enter 240ms ease both;
 }
 
 .screen[hidden] {
@@ -127,25 +160,26 @@ a {
 
 h1,
 h2 {
-  max-width: 12ch;
+  max-width: 15ch;
   margin: 0;
   color: var(--color-text);
   font-weight: 600;
-  line-height: 1.12;
+  line-height: 1.08;
+  letter-spacing: 0;
 }
 
 h1 {
-  font-size: clamp(2rem, 10vw, 4rem);
+  font-size: 2.25rem;
 }
 
 h2 {
-  font-size: clamp(1.7rem, 7vw, 3rem);
+  font-size: 1.8rem;
 }
 
 .question-block h2 {
-  max-width: 22ch;
-  font-size: clamp(1.15rem, 5vw, 1.55rem);
-  line-height: 1.3;
+  max-width: 25ch;
+  font-size: 1.18rem;
+  line-height: 1.35;
 }
 
 p {
@@ -154,14 +188,14 @@ p {
 }
 
 .screen-copy p {
-  max-width: 46rem;
-  font-size: clamp(0.98rem, 3.8vw, 1.08rem);
+  max-width: 42rem;
+  font-size: 1rem;
 }
 
 .question-block {
   display: grid;
   gap: var(--space-5);
-  margin-top: clamp(1.75rem, 7vw, 2.5rem);
+  margin-top: var(--space-8);
 }
 
 .choice-grid {
@@ -175,24 +209,40 @@ p {
 .text-action,
 .link-copy-button {
   min-height: 52px;
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius);
   font-weight: 600;
   line-height: 1.2;
   text-align: center;
-  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+  transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
 }
 
 .choice-button {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
   padding: var(--space-4) var(--space-5);
-  background: var(--color-card);
+  background: var(--color-surface);
   color: var(--color-text);
   border: 1px solid var(--color-border);
 }
 
+.choice-button::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  opacity: 0.5;
+  transform: rotate(45deg);
+}
+
 .choice-button:hover {
-  background: #f7f7f5;
-  border-color: #c8c8c0;
+  background: var(--color-black);
+  color: var(--color-card);
+  border-color: var(--color-black);
 }
 
 .choice-button:active,
@@ -218,12 +268,15 @@ select:focus-visible {
 .screen-footer {
   display: grid;
   gap: var(--space-4);
-  margin-top: clamp(1.75rem, 7vw, 2.5rem);
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-soft);
 }
 
 .privacy-note {
+  max-width: 42rem;
   color: var(--color-muted);
-  font-size: 0.83rem;
+  font-size: 0.85rem;
 }
 
 .copy-row {
@@ -237,7 +290,7 @@ select:focus-visible {
 .text-action {
   min-height: 52px;
   padding: 0.75rem 1rem;
-  background: #f7f7f5;
+  background: var(--color-card);
   color: var(--color-text);
   border: 1px solid var(--color-border);
 }
@@ -265,7 +318,7 @@ select:focus-visible {
 .action-stack {
   display: grid;
   gap: var(--space-4);
-  margin-top: clamp(1.75rem, 7vw, 2.25rem);
+  margin-top: var(--space-8);
 }
 
 .primary-action {
@@ -311,7 +364,7 @@ select:focus-visible {
 .feedback-form {
   display: grid;
   gap: var(--space-4);
-  margin-top: clamp(1.5rem, 6vw, 2rem);
+  margin-top: var(--space-8);
 }
 
 .field-group {
@@ -331,10 +384,10 @@ select {
   width: 100%;
   min-height: 50px;
   padding: 0.85rem 0.95rem;
-  background: var(--color-card);
+  background: var(--color-surface);
   color: var(--color-text);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius);
 }
 
 textarea {
@@ -344,18 +397,18 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-  color: #9b9b96;
+  color: #989891;
 }
 
 input:hover,
 textarea:hover,
 select:hover {
-  border-color: #c8c8c0;
+  border-color: #c2c2ba;
 }
 
 [aria-invalid="true"] {
   border-color: var(--color-error);
-  box-shadow: 0 0 0 1px rgba(138, 28, 28, 0.12);
+  box-shadow: 0 0 0 1px rgba(138, 28, 28, 0.14);
 }
 
 .field-error {
@@ -394,7 +447,7 @@ select:hover {
 @keyframes screen-enter {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
 
   to {
@@ -404,10 +457,6 @@ select:hover {
 }
 
 @media (min-width: 560px) {
-  .page-shell {
-    padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
-  }
-
   .choice-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -417,31 +466,81 @@ select:hover {
   }
 }
 
-@media (min-width: 860px) {
+@media (min-width: 760px) {
+  .page-shell {
+    padding: max(28px, env(safe-area-inset-top)) 28px max(28px, env(safe-area-inset-bottom));
+  }
+
   .experience-card {
-    border-radius: 2rem;
+    grid-template-columns: minmax(250px, 0.38fr) minmax(0, 0.62fr);
+  }
+
+  .brand-header {
+    min-height: 100%;
+    padding: var(--space-8);
+  }
+
+  .content-panel {
+    padding: var(--space-10);
+  }
+
+  h1 {
+    font-size: 3.15rem;
+  }
+
+  h2 {
+    font-size: 2.25rem;
+  }
+
+  .feedback-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .field-wide,
+  .form-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1080px) {
+  .content-panel {
+    padding: 3rem;
+  }
+
+  h1 {
+    font-size: 3.45rem;
   }
 }
 
 @media (max-width: 380px) {
-  .experience-card {
-    padding: 1.1rem;
+  .page-shell {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
-  .brand-logo-image {
-    width: min(54vw, 10.5rem);
+  .brand-header,
+  .content-panel {
+    padding: var(--space-5);
+  }
+
+  .brand-mark {
+    width: min(100%, 220px);
   }
 
   .brand-subtitle {
-    font-size: 0.62rem;
+    font-size: 0.72rem;
+  }
+
+  .brand-note {
+    font-size: 0.82rem;
   }
 
   h1 {
-    font-size: 1.82rem;
+    font-size: 2rem;
   }
 
   h2 {
-    font-size: 1.55rem;
+    font-size: 1.6rem;
   }
 }
 

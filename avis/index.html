@@ -20,10 +20,16 @@
   <main class="page-shell">
     <div class="experience-card" aria-labelledby="main-title">
       <header class="brand-header">
-        <img class="brand-logo-image" src="./logo-bl.webp" alt="LUME" width="2048" height="512" />
-        <p class="brand-subtitle">EXPÉRIENCE CLIENT</p>
+        <div class="brand-mark">
+          <img class="brand-logo-image" src="./logo-bl.webp" alt="LUME" width="2048" height="512" />
+        </div>
+        <div class="brand-caption">
+          <p class="brand-subtitle">EXPÉRIENCE CLIENT</p>
+          <p class="brand-note">Showroom & conseil lumière</p>
+        </div>
       </header>
 
+      <div class="content-panel">
       <section class="screen is-active" id="screen-question" data-screen="question" aria-labelledby="main-title">
         <div class="screen-copy">
           <h1 id="main-title">Comment s’est passée votre expérience avec LUME&nbsp;?</h1>
@@ -82,13 +88,13 @@
             <p class="field-error" id="phone-error"></p>
           </div>
 
-          <div class="field-group">
+          <div class="field-group field-wide">
             <label for="message">Votre message</label>
             <textarea id="message" name="message" placeholder="Expliquez-nous ce qui s’est passé…" minlength="10" required></textarea>
             <p class="field-error" id="message-error"></p>
           </div>
 
-          <div class="field-group">
+          <div class="field-group field-wide">
             <label for="preferred-time">Moment préféré pour être contacté</label>
             <select id="preferred-time" name="preferredTime">
               <option value="">Non précisé</option>
@@ -110,6 +116,7 @@
           </div>
         </form>
       </section>
+      </div>
     </div>
   </main>
 
