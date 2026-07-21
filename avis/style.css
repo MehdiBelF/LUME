@@ -97,12 +97,11 @@ a {
   margin-bottom: clamp(1.75rem, 6vw, 2.75rem);
 }
 
-.brand-logo {
-  color: var(--color-black);
-  font-size: clamp(1.65rem, 8vw, 2.4rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.18em;
+.brand-logo-image {
+  display: block;
+  width: min(46vw, 13rem);
+  height: auto;
+  object-fit: contain;
 }
 
 .brand-subtitle {
@@ -429,8 +428,8 @@ select:hover {
     padding: 1.1rem;
   }
 
-  .brand-logo {
-    font-size: 1.45rem;
+  .brand-logo-image {
+    width: min(54vw, 10.5rem);
   }
 
   .brand-subtitle {
