@@ -1,11 +1,11 @@
 :root {
-  --color-background: #f2f2ef;
+  --color-background: #eeeeea;
   --color-card: #ffffff;
-  --color-surface: #f8f8f6;
-  --color-text: #090909;
-  --color-muted: #676762;
-  --color-soft: #ecece7;
-  --color-border: #dadad3;
+  --color-surface: #f7f7f4;
+  --color-text: #080808;
+  --color-muted: #666660;
+  --color-soft: #e8e8e2;
+  --color-border: #d8d8d0;
   --color-black: #050505;
   --color-error: #8a1c1c;
   --color-disabled: #b9b9b2;
@@ -18,7 +18,7 @@
   --space-8: 2rem;
   --space-10: 2.5rem;
   --radius: 8px;
-  --shadow-card: 0 24px 70px rgba(5, 5, 5, 0.12);
+  --shadow-card: 0 28px 80px rgba(5, 5, 5, 0.16);
   --focus-ring: 0 0 0 4px rgba(5, 5, 5, 0.16);
 }
 
@@ -72,6 +72,7 @@ a {
 }
 
 .page-shell {
+  position: relative;
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
@@ -80,34 +81,85 @@ a {
   padding: max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom));
 }
 
+.page-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 34%;
+  min-width: 148px;
+  background: #0a0a0a;
+  pointer-events: none;
+}
+
 .experience-card {
-  width: min(100%, 960px);
-  min-height: min(680px, calc(100vh - 36px));
+  position: relative;
+  z-index: 1;
+  width: min(100%, 980px);
+  min-height: min(710px, calc(100vh - 36px));
   display: grid;
   overflow: hidden;
   background: var(--color-card);
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(5, 5, 5, 0.14);
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
 }
 
+.experience-card::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(5, 5, 5, 0.06);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
 .brand-header {
-  min-height: 188px;
+  position: relative;
+  min-height: 210px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-8);
+  overflow: hidden;
   padding: var(--space-6);
   background: var(--color-black);
   color: var(--color-card);
 }
 
+.brand-header::before,
+.brand-header::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.brand-header::before {
+  top: 0;
+  bottom: 0;
+  left: 36%;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.brand-header::after {
+  right: 0;
+  bottom: 22%;
+  width: 42%;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.brand-topline,
+.brand-caption {
+  position: relative;
+  z-index: 1;
+}
+
 .brand-mark {
-  width: min(100%, 260px);
-  padding: 7px;
+  width: min(100%, 278px);
+  padding: 8px;
   background: var(--color-card);
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.38);
   border-radius: var(--radius);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.34);
 }
 
 .brand-logo-image {
@@ -117,13 +169,37 @@ a {
   object-fit: contain;
 }
 
+.brand-lines {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 11px;
+  width: min(100%, 230px);
+  margin-top: auto;
+}
+
+.brand-lines span {
+  display: block;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.brand-lines span:nth-child(2) {
+  width: 72%;
+}
+
+.brand-lines span:nth-child(3) {
+  width: 42%;
+}
+
 .brand-caption {
   display: grid;
   gap: var(--space-1);
 }
 
 .brand-subtitle,
-.brand-note {
+.brand-note,
+.brand-location {
   margin: 0;
 }
 
@@ -134,18 +210,37 @@ a {
   letter-spacing: 0;
 }
 
-.brand-note {
+.brand-note,
+.brand-location {
   color: #bdbdb7;
   font-size: 0.9rem;
 }
 
+.brand-location {
+  color: #8f8f88;
+}
+
 .content-panel {
+  position: relative;
   display: grid;
   align-content: center;
   padding: var(--space-6);
 }
 
+.content-panel::before {
+  content: "";
+  position: absolute;
+  top: var(--space-6);
+  bottom: var(--space-6);
+  left: var(--space-6);
+  border-left: 1px solid var(--color-soft);
+  pointer-events: none;
+}
+
 .screen {
+  position: relative;
+  z-index: 1;
+  padding-left: var(--space-5);
   animation: screen-enter 240ms ease both;
 }
 
@@ -156,6 +251,17 @@ a {
 .screen-copy {
   display: grid;
   gap: var(--space-4);
+}
+
+.section-kicker {
+  width: fit-content;
+  padding: 0.42rem 0.62rem;
+  background: var(--color-black);
+  color: var(--color-card);
+  border-radius: var(--radius);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 h1,
@@ -193,9 +299,27 @@ p {
 }
 
 .question-block {
+  position: relative;
   display: grid;
   gap: var(--space-5);
   margin-top: var(--space-8);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.question-label {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  background: var(--color-card);
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .choice-grid {
@@ -223,7 +347,7 @@ p {
   justify-content: space-between;
   gap: var(--space-4);
   padding: var(--space-4) var(--space-5);
-  background: var(--color-surface);
+  background: var(--color-card);
   color: var(--color-text);
   border: 1px solid var(--color-border);
 }
@@ -243,6 +367,7 @@ p {
   background: var(--color-black);
   color: var(--color-card);
   border-color: var(--color-black);
+  box-shadow: 0 16px 34px rgba(5, 5, 5, 0.14);
 }
 
 .choice-button:active,
@@ -327,6 +452,7 @@ select:focus-visible {
   background: var(--color-black);
   color: var(--color-card);
   border: 1px solid var(--color-black);
+  box-shadow: 0 16px 34px rgba(5, 5, 5, 0.14);
 }
 
 .primary-action:hover {
@@ -343,6 +469,7 @@ select:focus-visible {
   background: #eeeeea;
   color: #65655f;
   border-color: var(--color-disabled);
+  box-shadow: none;
   opacity: 0.72;
 }
 
@@ -365,6 +492,10 @@ select:focus-visible {
   display: grid;
   gap: var(--space-4);
   margin-top: var(--space-8);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
 }
 
 .field-group {
@@ -384,7 +515,7 @@ select {
   width: 100%;
   min-height: 50px;
   padding: 0.85rem 0.95rem;
-  background: var(--color-surface);
+  background: var(--color-card);
   color: var(--color-text);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
@@ -472,7 +603,7 @@ select:hover {
   }
 
   .experience-card {
-    grid-template-columns: minmax(250px, 0.38fr) minmax(0, 0.62fr);
+    grid-template-columns: minmax(260px, 0.36fr) minmax(0, 0.64fr);
   }
 
   .brand-header {
@@ -484,12 +615,22 @@ select:hover {
     padding: var(--space-10);
   }
 
+  .content-panel::before {
+    top: var(--space-10);
+    bottom: var(--space-10);
+    left: var(--space-10);
+  }
+
+  .screen {
+    padding-left: var(--space-8);
+  }
+
   h1 {
-    font-size: 3.15rem;
+    font-size: 2.62rem;
   }
 
   h2 {
-    font-size: 2.25rem;
+    font-size: 2rem;
   }
 
   .feedback-form {
@@ -507,8 +648,65 @@ select:hover {
     padding: 3rem;
   }
 
+  .content-panel::before {
+    top: 3rem;
+    bottom: 3rem;
+    left: 3rem;
+  }
+
   h1 {
-    font-size: 3.45rem;
+    font-size: 2.9rem;
+  }
+}
+
+@media (max-width: 759px) {
+  .page-shell::before {
+    right: 0;
+    width: 100%;
+    height: 150px;
+    min-width: 0;
+    bottom: auto;
+  }
+
+  .experience-card {
+    min-height: auto;
+  }
+
+  .brand-header {
+    min-height: 178px;
+    gap: var(--space-5);
+  }
+
+  .brand-lines {
+    display: none;
+  }
+
+  .screen-copy {
+    gap: var(--space-3);
+  }
+
+  .section-kicker {
+    font-size: 0.68rem;
+  }
+
+  .question-block {
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+    padding: var(--space-4);
+  }
+
+  .question-block h2 {
+    font-size: 1.06rem;
+  }
+
+  .question-label {
+    width: 34px;
+    height: 34px;
+  }
+
+  .screen-footer {
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
   }
 }
 
@@ -523,20 +721,31 @@ select:hover {
     padding: var(--space-5);
   }
 
+  .content-panel::before {
+    top: var(--space-5);
+    bottom: var(--space-5);
+    left: var(--space-5);
+  }
+
+  .screen {
+    padding-left: var(--space-4);
+  }
+
   .brand-mark {
-    width: min(100%, 220px);
+    width: min(100%, 226px);
   }
 
   .brand-subtitle {
     font-size: 0.72rem;
   }
 
-  .brand-note {
+  .brand-note,
+  .brand-location {
     font-size: 0.82rem;
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.82rem;
   }
 
   h2 {

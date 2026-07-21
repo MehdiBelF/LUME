@@ -20,23 +20,35 @@
   <main class="page-shell">
     <div class="experience-card" aria-labelledby="main-title">
       <header class="brand-header">
-        <div class="brand-mark">
-          <img class="brand-logo-image" src="./logo-bl.webp" alt="LUME" width="2048" height="512" />
+        <div class="brand-topline">
+          <div class="brand-mark">
+            <img class="brand-logo-image" src="./logo-bl.webp" alt="LUME" width="2048" height="512" />
+          </div>
         </div>
+
+        <div class="brand-lines" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
         <div class="brand-caption">
           <p class="brand-subtitle">EXPÉRIENCE CLIENT</p>
           <p class="brand-note">Showroom & conseil lumière</p>
+          <p class="brand-location">Casablanca</p>
         </div>
       </header>
 
       <div class="content-panel">
       <section class="screen is-active" id="screen-question" data-screen="question" aria-labelledby="main-title">
         <div class="screen-copy">
+          <p class="section-kicker">Avis privé ou public</p>
           <h1 id="main-title">Comment s’est passée votre expérience avec LUME&nbsp;?</h1>
           <p>Votre retour nous aide à améliorer notre accueil, nos conseils et la qualité de notre service.</p>
         </div>
 
         <div class="question-block" aria-labelledby="satisfaction-question">
+          <div class="question-label">01</div>
           <h2 id="satisfaction-question">Êtes-vous satisfait(e) de votre expérience avec LUME&nbsp;?</h2>
           <div class="choice-grid">
             <button class="choice-button" type="button" data-action="satisfied">Oui, satisfait(e)</button>
@@ -55,6 +67,7 @@
 
       <section class="screen" id="screen-satisfied" data-screen="satisfied" aria-labelledby="satisfied-title" hidden>
         <div class="screen-copy">
+          <p class="section-kicker">Avis Google</p>
           <h2 id="satisfied-title">Merci pour votre confiance.</h2>
           <p>Votre avis sincère aide LUME à améliorer son expérience et permet à d’autres personnes de mieux découvrir notre showroom et notre travail.</p>
           <p class="small-line">Cela ne prend qu’une minute.</p>
@@ -71,6 +84,7 @@
 
       <section class="screen" id="screen-not-satisfied" data-screen="not-satisfied" aria-labelledby="not-satisfied-title" hidden>
         <div class="screen-copy">
+          <p class="section-kicker">Contact privé</p>
           <h2 id="not-satisfied-title">Nous souhaitons trouver une solution.</h2>
           <p>Expliquez-nous ce qui n’a pas répondu à vos attentes. L’équipe LUME vous contactera afin de mieux comprendre votre expérience et chercher une solution.</p>
         </div>
