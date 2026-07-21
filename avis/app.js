@@ -45,7 +45,7 @@ function bindActions() {
 
     if (action === "satisfied") {
       saveResponse("satisfied");
-      showScreen(SCREEN_NAMES.satisfied);
+      openGoogleReview(actionElement);
     }
 
     if (action === "not-satisfied") {

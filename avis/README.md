@@ -16,7 +16,7 @@ Cette application est une page statique GitHub Pages destinée à recueillir le 
 10. L’URL publique attendue est : `https://mehdibelf.github.io/LUME/avis/`.
 11. Les données du formulaire ne sont pas stockées par la page.
 12. Seul le choix de satisfaction est stocké localement dans `lume_experience_response`.
-13. Les visiteurs satisfaits et non satisfaits gardent tous les deux accès au lien Google.
+13. Les visiteurs satisfaits sont dirigés directement vers le lien Google, et les visiteurs non satisfaits gardent aussi accès au lien Google.
 14. Pour changer le numéro WhatsApp, modifier `whatsappNumber` dans `app.js`.
 15. Pour changer l’URL Google, modifier `googleReviewUrl` dans `app.js`.
 16. Pour tester localement, ouvrir `avis/index.html` dans un navigateur.
